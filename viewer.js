@@ -55,7 +55,25 @@ bookmarkSelect.addEventListener("change", async () => {
   const outlineItem = bookmarkSelect.outlines[index];
   if (!outlineItem) return;
 
-  const dest = outlineItem.dest;
+  let dest = outlineItem.dest;
+
+  if (typeof dest === "string") {
+    dest = await pdfDoc.getDestination(dest);
+  }
+
+  if (Array.isArray(dest)) {
+    const [ref] = dest;
+    const pageNumber = await pdfDoc.getPageIndex(ref);
+    renderPage(pageNumber + 1);
+  } else if (dest && dest.num !== undefined) {
+    // fallback if direct reference
+    const pageNumber = await pdfDoc.getPageIndex(dest);
+    renderPage(pageNumber + 1);
+  } else {
+    alert("Unable to determine destination page");
+  }
+});
+
 
   const destination = await pdfDoc.getDestination(dest);
   const pageIndex = await pdfDoc.getPageIndex(destination[0]);
