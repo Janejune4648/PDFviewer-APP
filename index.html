@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDF Viewer with Bookmarks</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="icon" href="assets/icon-192.png">
+</head>
+<body>
+  <h1>PDF Viewer with Bookmarks</h1>
+  <input type="file" id="file-input" accept="application/pdf"/>
+  <select id="bookmark-select">
+    <option value="">-- Select Bookmark --</option>
+  </select>
+  <canvas id="pdf-canvas"></canvas>
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="viewer.js"></script>
+
+  <!-- Register service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
